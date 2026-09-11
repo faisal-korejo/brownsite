@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faisal Ali — Content Writer, Legal, Trademark & Business Content</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#eee9df;
+    --paper-line:#d8cfbd;
+    --panel:#f6f2e9;
+    --ink:#211b16;
+    --ink-soft:#5b5347;
+    --seal:#7a3324;
+    --seal-dark:#5a2419;
+    --moss:#3f4f3c;
+    --rule:#c8bda5;
+    --max:740px;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 34px,
+        rgba(122,51,36,0.055) 35px
+      ),
+      var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", sans-serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--seal); color:var(--paper); }
+
+  a{ color:var(--seal); }
+
+  h1,h2,h3{
+    font-family:"Newsreader", serif;
+    font-weight:500;
+    color:var(--ink);
+    margin:0;
+  }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- top bar ---------- */
+
+  .topbar{
+    position:sticky; top:0; z-index:30;
+    background:rgba(238,233,223,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--paper-line);
+  }
+  .topbar .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:14px; padding-bottom:14px;
+  }
+  .topbar .brand{
+    font-family:"Newsreader", serif;
+    font-size:19px;
+    font-style:italic;
+    color:var(--ink);
+    text-decoration:none;
+  }
+  .topbar nav{
+    display:flex; gap:22px;
+  }
+  .topbar nav a{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .topbar nav a:hover{ color:var(--seal); border-color:var(--seal); }
+  .topbar-mobile-hide{ }
+  @media (max-width:620px){
+    .topbar nav{ display:none; }
+  }
+
+  /* ---------- hero ---------- */
+
+  .hero{
+    padding:78px 0 64px;
+    position:relative;
+  }
+  .hero .wrap{ position:relative; }
+
+  .docref{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11.5px;
+    letter-spacing:.03em;
+    color:var(--ink-soft);
+    margin-bottom:22px;
+  }
+
+  .hero h1{
+    font-size:clamp(38px, 7vw, 58px);
+    line-height:1.05;
+    letter-spacing:-0.01em;
+  }
+
+  .hero .role{
+    margin-top:16px;
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:480px;
+  }
+
+  .hero p.lede{
+    margin-top:26px;
+    max-width:520px;
+    font-size:16.5px;
+    color:var(--ink-soft);
+  }
+
+  .hero .cta-row{
+    margin-top:34px;
+    display:flex; gap:14px; flex-wrap:wrap;
+    align-items:center;
+  }
+
+  .btn{
+    display:inline-block;
+    font-family:"IBM Plex Sans", sans-serif;
+    font-size:14.5px;
+    font-weight:500;
+    text-decoration:none;
+    padding:11px 20px;
+    border-radius:2px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .btn-primary{
+    background:var(--seal);
+    color:var(--paper);
+    border:1px solid var(--seal);
+  }
+  .btn-primary:hover{ background:var(--seal-dark); }
+  .btn-ghost{
+    color:var(--ink);
+    border:1px solid var(--rule);
+  }
+  .btn-ghost:hover{ border-color:var(--seal); color:var(--seal); }
+
+  /* stamp */
+  .stamp{
+    position:absolute;
+    top:56px; right:0;
+    width:118px; height:118px;
+    border:1.5px solid var(--seal);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    transform:rotate(-9deg);
+    opacity:0;
+    animation:stampIn .55s cubic-bezier(.2,.9,.3,1.3) .25s forwards;
+  }
+  .stamp::before{
+    content:"";
+    position:absolute; inset:8px;
+    border:1px solid var(--seal);
+    border-radius:50%;
+    opacity:.55;
+  }
+  .stamp-text{
+    font-family:"IBM Plex Mono", monospace;
+    color:var(--seal);
+    text-align:center;
+    font-size:10.5px;
+    letter-spacing:.05em;
+    line-height:1.5;
+  }
+  .stamp-text span{ display:block; }
+  .stamp-text .big{ font-size:13px; font-weight:500; }
+
+  @keyframes stampIn{
+    from{ opacity:0; transform:rotate(-24deg) scale(1.3); }
+    to{ opacity:1; transform:rotate(-9deg) scale(1); }
+  }
+
+  @media (max-width:620px){
+    .stamp{ position:static; margin-top:34px; transform:rotate(-6deg); }
+  }
+
+  /* ---------- section framework ---------- */
+
+  section{
+    padding:56px 0;
+    border-top:1px solid var(--paper-line);
+  }
+
+  .kicker{
+    display:flex; align-items:baseline; gap:12px;
+    margin-bottom:28px;
+  }
+  .kicker .num{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px;
+    color:var(--seal);
+  }
+  .kicker h2{
+    font-size:27px;
+  }
+
+  /* ---------- about ---------- */
+
+  .about p{ max-width:600px; color:var(--ink-soft); }
+  .about p + p{ margin-top:14px; }
+
+  .strengths{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 28px;
+  }
+  .strengths div{
+    padding:10px 0;
+    border-top:1px solid var(--paper-line);
+    font-size:15px;
+    color:var(--ink);
+  }
+  @media (max-width:560px){
+    .strengths{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- services table ---------- */
+
+  .schedule{ width:100%; border-collapse:collapse; }
+  .schedule tr{ border-top:1px solid var(--paper-line); }
+  .schedule tr:last-child{ border-bottom:1px solid var(--paper-line); }
+  .schedule td{
+    padding:18px 0;
+    vertical-align:top;
+  }
+  .schedule td.svc-name{
+    width:190px;
+    padding-right:22px;
+    font-family:"Newsreader", serif;
+    font-size:18px;
+    font-style:italic;
+    color:var(--ink);
+  }
+  .schedule td.svc-desc{
+    color:var(--ink-soft);
+    font-size:15.5px;
+  }
+  @media (max-width:600px){
+    .schedule, .schedule tbody, .schedule tr, .schedule td{ display:block; width:100%; }
+    .schedule td.svc-name{ padding-right:0; padding-bottom:4px; }
+    .schedule tr{ padding:16px 0 4px; }
+  }
+
+  /* ---------- skills ---------- */
+
+  .skills-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 28px;
+  }
+  .skills-grid div{
+    font-size:15px;
+    padding:9px 0 9px 16px;
+    border-left:2px solid var(--rule);
+    color:var(--ink-soft);
+  }
+  @media (max-width:560px){
+    .skills-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- projects ---------- */
+
+  .project{
+    padding:22px 0;
+    border-top:1px solid var(--paper-line);
+    display:grid;
+    grid-template-columns:200px 1fr;
+    gap:20px;
+  }
+  .project:last-child{ border-bottom:1px solid var(--paper-line); }
+  .project h3{
+    font-size:19px;
+    font-weight:500;
+  }
+  .project p{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:15.5px;
+  }
+  @media (max-width:600px){
+    .project{ grid-template-columns:1fr; gap:6px; }
+  }
+
+  /* ---------- exhibits (samples) ---------- */
+
+  .exhibits{ display:flex; flex-direction:column; gap:2px; }
+  .exhibit{
+    display:flex; align-items:baseline; gap:16px;
+    padding:16px 18px;
+    background:var(--panel);
+    border:1px solid var(--paper-line);
+    text-decoration:none;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .exhibit + .exhibit{ margin-top:8px; }
+  .exhibit:hover{ border-color:var(--seal); background:#f9f5ec; }
+  .exhibit .tag{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11.5px;
+    color:var(--seal);
+    white-space:nowrap;
+    padding-top:2px;
+  }
+  .exhibit .body h4{
+    margin:0 0 3px;
+    font-family:"IBM Plex Sans", sans-serif;
+    font-weight:600;
+    font-size:15.5px;
+    color:var(--ink);
+  }
+  .exhibit .body p{
+    margin:0;
+    font-size:14px;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- workflow ---------- */
+
+  .workflow{ position:relative; padding-left:26px; }
+  .workflow::before{
+    content:"";
+    position:absolute; left:5px; top:6px; bottom:6px;
+    width:1px;
+    background:var(--rule);
+  }
+  .step{ position:relative; padding-bottom:30px; }
+  .step:last-child{ padding-bottom:0; }
+  .step::before{
+    content:attr(data-n);
+    position:absolute; left:-26px; top:0;
+    width:11px; height:11px;
+    background:var(--paper);
+    border:1.5px solid var(--seal);
+    border-radius:50%;
+    font-size:0;
+  }
+  .step h3{
+    font-size:16.5px;
+    font-weight:600;
+    font-family:"IBM Plex Sans", sans-serif;
+    color:var(--ink);
+  }
+  .step p{
+    margin:5px 0 0;
+    font-size:15px;
+    color:var(--ink-soft);
+    max-width:520px;
+  }
+
+  /* ---------- industries ---------- */
+
+  .practice-list{
+    columns:2;
+    column-gap:28px;
+  }
+  .practice-list div{
+    break-inside:avoid;
+    padding:9px 0;
+    border-top:1px solid var(--paper-line);
+    font-size:15px;
+    color:var(--ink);
+    display:flex; gap:10px; align-items:baseline;
+  }
+  .practice-list div::before{
+    content:"—";
+    color:var(--seal);
+    font-size:13px;
+  }
+  @media (max-width:560px){ .practice-list{ columns:1; } }
+
+  /* ---------- bring ---------- */
+
+  .bring{ display:flex; flex-direction:column; }
+  .bring div{
+    padding:14px 0;
+    border-top:1px solid var(--paper-line);
+    font-size:15.5px;
+    color:var(--ink-soft);
+    display:grid;
+    grid-template-columns:26px 1fr;
+  }
+  .bring div:last-child{ border-bottom:1px solid var(--paper-line); }
+  .bring div span.mk{ color:var(--seal); font-family:"Newsreader", serif; font-style:italic; }
+
+  /* ---------- footer / contact ---------- */
+
+  footer{
+    padding:64px 0 80px;
+    border-top:1px solid var(--paper-line);
+  }
+  footer .close h2{
+    font-size:clamp(30px, 5.5vw, 42px);
+    max-width:480px;
+  }
+  footer .close p{
+    margin-top:14px;
+    color:var(--ink-soft);
+    max-width:440px;
+  }
+  .sig{
+    margin-top:44px;
+    padding-top:24px;
+    border-top:1px solid var(--rule);
+    display:flex; flex-wrap:wrap;
+    justify-content:space-between;
+    gap:20px 40px;
+  }
+  .sig .name{
+    font-family:"Newsreader", serif;
+    font-style:italic;
+    font-size:20px;
+  }
+  .sig .services-line{
+    margin-top:6px;
+    font-size:13px;
+    color:var(--ink-soft);
+    max-width:340px;
+  }
+  .sig .contact-block{
+    font-size:14.5px;
+    line-height:1.9;
+  }
+  .sig .contact-block a{ text-decoration:none; }
+  .sig .contact-block a:hover{ text-decoration:underline; }
+  .sig .label{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    letter-spacing:.02em;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .stamp{ animation:none; opacity:1; }
+    html{ scroll-behavior:auto; }
+  }
+
+  a:focus-visible, .btn:focus-visible{
+    outline:2px solid var(--seal);
+    outline-offset:3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a href="#top" class="brand">Faisal Ali</a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#samples">Samples</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="docref">Portfolio on file · Karachi, Pakistan</div>
+    <h1>Faisal Ali writes<br>content that reads<br>like it was built for the brief.</h1>
+    <div class="role">SEO Content Writer — Website, Legal, Trademark &amp; Business Content</div>
+    <p class="lede">Research-driven, structured, and search-aware writing for firms that need their website content to hold up under scrutiny — trademark agencies, law practices, accountancy sites, and service businesses.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#samples">View writing samples</a>
+      <a class="btn btn-ghost" href="mailto:faisalzama043@gmail.com">Email me</a>
+    </div>
+
+    <div class="stamp" aria-hidden="true">
+      <div class="stamp-text">
+        <span class="big">SEO</span>
+        <span>TRADEMARK</span>
+        <span>LEGAL</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="kicker"><span class="num">01</span><h2>About</h2></div>
+    <div class="about">
+      <p>I write professional, audience-friendly, SEO-conscious content for websites and digital businesses. The approach combines research, clear communication, structured writing, keyword placement, and search-intent awareness.</p>
+      <p>My portfolio includes large-scale trademark website content, legal and law-related writing, SEO blogs, accountancy-focused content, service pages, FAQs, headings, meta descriptions, and supporting website copy.</p>
+    </div>
+    <div class="strengths">
+      <div>SEO-focused structure and keyword integration</div>
+      <div>Professional website and service-page writing</div>
+      <div>Legal, law and trademark content</div>
+      <div>Accountancy and business content</div>
+      <div>Long-form and short-form blog writing</div>
+      <div>FAQs, metadata, headings and conversion copy</div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="kicker"><span class="num">02</span><h2>Services</h2></div>
+    <table class="schedule">
+      <tr>
+        <td class="svc-name">Website Content</td>
+        <td class="svc-desc">Homepages, service pages, process sections, benefits, about pages, and conversion-focused website copy.</td>
+      </tr>
+      <tr>
+        <td class="svc-name">SEO Blog Writing</td>
+        <td class="svc-desc">Informational blogs structured around search intent, keywords, headings, readability, and useful answers.</td>
+      </tr>
+      <tr>
+        <td class="svc-name">Legal &amp; Law Content</td>
+        <td class="svc-desc">Professional legal topics and law-service content with organized explanations and audience-focused presentation.</td>
+      </tr>
+      <tr>
+        <td class="svc-name">Trademark Content</td>
+        <td class="svc-desc">Trademark filing, registration, agency, protection, FAQ, service-page, and SEO content.</td>
+      </tr>
+      <tr>
+        <td class="svc-name">Accountancy Content</td>
+        <td class="svc-desc">Professional informational writing for accountancy and financial-service websites.</td>
+      </tr>
+      <tr>
+        <td class="svc-name">SEO Metadata &amp; Microcopy</td>
+        <td class="svc-desc">Meta titles, descriptions, FAQs, headings, footer copy, bullets, and concise service descriptions.</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="kicker"><span class="num">03</span><h2>Writing &amp; SEO skills</h2></div>
+    <div class="skills-grid">
+      <div>Keyword research and strategic placement</div>
+      <div>Search-intent-focused content development</div>
+      <div>On-page SEO structure</div>
+      <div>H1/H2/H3 heading optimization</div>
+      <div>Meta title and meta description writing</div>
+      <div>Long-form and short-form content</div>
+      <div>Website conversion copy</div>
+      <div>Proofreading and refinement</div>
+      <div>FAQ-focused writing</div>
+      <div>Consistent production across large website batches</div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="kicker"><span class="num">04</span><h2>Featured portfolio projects</h2></div>
+
+    <div class="project">
+      <h3>Trademark Services Website Content</h3>
+      <p>Structured service pages, headings, FAQs, keyword-focused paragraphs, footer sections, and metadata for trademark-service websites.</p>
+    </div>
+    <div class="project">
+      <h3>Law Blog Writing</h3>
+      <p>Professional law-focused blog writing with structured explanations, researched topics, clear organization, and SEO-aware presentation.</p>
+    </div>
+    <div class="project">
+      <h3>Accountancy Blog Writing</h3>
+      <p>Professional accountancy-focused blog writing designed for business audiences, using clear explanations, relevant terminology, logical sections, and informative structure.</p>
+    </div>
+    <div class="project">
+      <h3>SEO Blog &amp; Article Writing</h3>
+      <p>Topic-focused informational content using structured headings, relevant keywords, useful explanations, and reader-friendly formatting.</p>
+    </div>
+  </div>
+</section>
+
+<section id="samples">
+  <div class="wrap">
+    <div class="kicker"><span class="num">05</span><h2>Actual writing samples</h2></div>
+    <div class="exhibits">
+      <a class="exhibit" href="https://docs.google.com/document/d/1nKzZufc60Kx5oYol-ldc9t1hP_nfE4h0fRxe3BqMuBk/edit?usp=sharing" target="_blank" rel="noopener">
+        <span class="tag">Exhibit A</span>
+        <span class="body">
+          <h4>Law blog — actual sample</h4>
+          <p>Open the full law blog writing sample</p>
+        </span>
+      </a>
+      <a class="exhibit" href="https://docs.google.com/document/d/1mDq0iWPSDDNbx5EpL-zAp8U7ALsV7zoemcf3igZanNo/edit?usp=sharing" target="_blank" rel="noopener">
+        <span class="tag">Exhibit B</span>
+        <span class="body">
+          <h4>Accountancy blog — actual sample</h4>
+          <p>Open the full accountancy blog writing sample</p>
+        </span>
+      </a>
+      <a class="exhibit" href="https://www.linkedin.com/in/faisal-korejo/" target="_blank" rel="noopener">
+        <span class="tag">Profile</span>
+        <span class="body">
+          <h4>LinkedIn</h4>
+          <p>linkedin.com/in/faisal-korejo</p>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="workflow">
+  <div class="wrap">
+    <div class="kicker"><span class="num">06</span><h2>Content workflow</h2></div>
+    <div class="workflow">
+      <div class="step" data-n="1">
+        <h3>Research</h3>
+        <p>Understand the topic, audience, business objective, competitors, and search intent.</p>
+      </div>
+      <div class="step" data-n="2">
+        <h3>Planning</h3>
+        <p>Build headings, information hierarchy, keyword placement, and content direction.</p>
+      </div>
+      <div class="step" data-n="3">
+        <h3>Writing</h3>
+        <p>Develop original, readable content with the required tone and depth.</p>
+      </div>
+      <div class="step" data-n="4">
+        <h3>Optimization</h3>
+        <p>Refine keywords, headings, readability, flow, metadata, and supporting sections.</p>
+      </div>
+      <div class="step" data-n="5">
+        <h3>Review</h3>
+        <p>Check clarity, grammar, consistency, repetition, formatting, and brief alignment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="industries">
+  <div class="wrap">
+    <div class="kicker"><span class="num">07</span><h2>Industries &amp; topics</h2></div>
+    <div class="practice-list">
+      <div>Trademark &amp; Intellectual Property</div>
+      <div>Legal Services</div>
+      <div>Law &amp; Academic Services</div>
+      <div>Corporate Law</div>
+      <div>Competition Law</div>
+      <div>Banking &amp; Financial Services</div>
+      <div>Tax &amp; Accountancy</div>
+      <div>Business Services</div>
+      <div>Professional Services</div>
+      <div>SEO &amp; Digital Marketing</div>
+    </div>
+  </div>
+</section>
+
+<section id="bring">
+  <div class="wrap">
+    <div class="kicker"><span class="num">08</span><h2>What I bring to a project</h2></div>
+    <div class="bring">
+      <div><span class="mk">01</span> Consistent quality across high-volume content requirements</div>
+      <div><span class="mk">02</span> Strong attention to keyword placement and detailed briefs</div>
+      <div><span class="mk">03</span> Ability to adapt writing for different industries and audiences</div>
+      <div><span class="mk">04</span> Clear, professional, natural writing style</div>
+      <div><span class="mk">05</span> Experience with detailed pages and concise SEO copy</div>
+      <div><span class="mk">06</span> Structured approach to large website-content projects</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="close">
+      <h2>Let's work together</h2>
+      <p>Professional content built around your audience, brand, and search goals.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="mailto:faisalzama043@gmail.com">Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/faisal-korejo/" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      </div>
+    </div>
+    <div class="sig">
+      <div>
+        <div class="name">Faisal Ali</div>
+        <div class="services-line">Content Writing · SEO Content · Website Copy · Legal Content · Trademark Content · Law Blogs · Accountancy Content</div>
+      </div>
+      <div class="contact-block">
+        <div class="label">Email</div>
+        <div><a href="mailto:faisalzama043@gmail.com">faisalzama043@gmail.com</a></div>
+        <div class="label" style="margin-top:8px;">LinkedIn</div>
+        <div><a href="https://www.linkedin.com/in/faisal-korejo/" target="_blank" rel="noopener">faisal-korejo</a></div>
+        <div class="label" style="margin-top:8px;">Location</div>
+        <div>Pakistan</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
